@@ -1,11 +1,6 @@
 @import "tailwindcss";
 
-:root {
-    --main-bg-color: #1a1a1a;
-    --accent-color: #ff6f61;
-    --text-color: #f0f0f0;
-    --font-family: 'Funnel Sans', Arial, sans-serif;
-}
+
 
 * {
     box-sizing: border-box;
