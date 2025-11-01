@@ -1,4 +1,4 @@
-import  { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -245,7 +245,8 @@ const HeroSection = () => {
                 ref={cursorRef}
                 className="fixed flex justify-center items-center gap-1 px-2 top-0 left-0 w-7 h-7 bg-white rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-50"
             >
-                <img src="/image/eyes.png" className='h-5' alt="" ref={cursorEyeRef} />
+                {/* --- ✅ FIX: Removed leading slash --- */}
+                <img src="image/eyes.png" className='h-5' alt="" ref={cursorEyeRef} />
                 <span ref={cursorTextRef} className="text-black text-md font-bold">
                     See My Work
                 </span>
@@ -284,7 +285,8 @@ const HeroSection = () => {
                             >
                                 <div className='h-full w-full overflow-hidden'>
                                     <video
-                                        src="/video/headerVideo.mp4"
+                                        // --- ✅ FIX: Removed leading slash ---
+                                        src="video/headerVideo.mp4"
                                         autoPlay muted loop playsInline
                                         className="w-full h-full object-cover object-left-top rounded-4xl"
                                         ref={videoHeaderRef}
@@ -305,7 +307,8 @@ const HeroSection = () => {
                                 <div className='absolute h-2 w-5 top-6 left-3 bg-amber-50 opacity-0' ref={rupeeRef1}></div>
                                 <div className='absolute h-2 w-5 top-10.5 left-2 bg-amber-50 opacity-0' ref={rupeeRef2}></div>
                                 {/* ✅ FIX 3: Removed the incorrect 'ref={rupeeTimeline}' prop */}
-                                <img src='/image/rupee_image.png'
+                                {/* This path was already correct (relative) */}
+                                <img src='image/rupee_image.png'
                                     onMouseEnter={handleRupeeEnter}
                                     onMouseLeave={handleRupeeLeave} className='h-[150px] w-[120px] ml-3 mt-2' alt='Rupee icon' />
                             </div>
