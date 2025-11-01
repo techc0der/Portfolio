@@ -1,7 +1,14 @@
-import React from 'react';
+// FIX 1: 'React' import is removed (it's not used)
 
-// The component now accepts props for size, color, and additional classNames.
-const MyArrowSvg = ({ size = 90, color = 'white', className }) => {
+// FIX 2: Define an interface for all your component's props
+interface MyArrowSvgProps {
+  size?: number;
+  color?: string;
+  className?: string; // This '?' makes it optional
+}
+
+// FIX 3: Apply the prop types to your component
+const MyArrowSvg = ({ size = 90, color = 'white', className }: MyArrowSvgProps) => {
   return (
     <svg
       width={size}
