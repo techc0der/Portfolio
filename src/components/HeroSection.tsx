@@ -9,27 +9,27 @@ import Lenis from 'lenis';
 gsap.registerPlugin(ScrollTrigger);
 
 const HeroSection = () => {
-    // --- Refs and State ---
-    const heroRef = useRef(null);
-    const headerRef = useRef(null);
-    const textRef = useRef(null);
-    const videoHeaderRef = useRef(null);
-    const mernHeaderRef = useRef(null);
-    const rupeeRef1 = useRef(null);
-    const rupeeRef2 = useRef(null);
-    const aboutMernRef = useRef(null);
-    const arrowRef = useRef(null);
-    const cursorRef = useRef(null);
-    const scrollBtnRef = useRef(null);
-    const cursorTextRef = useRef(null);
-    const cursorEyeRef = useRef(null);
-    const lenisRef = useRef(null);
+    // --- Refs and State (NOW TYPED) ---
+    const heroRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const textRef = useRef<HTMLParagraphElement>(null);
+    const videoHeaderRef = useRef<HTMLVideoElement>(null);
+    const mernHeaderRef = useRef<HTMLHeadingElement>(null);
+    const rupeeRef1 = useRef<HTMLDivElement>(null);
+    const rupeeRef2 = useRef<HTMLDivElement>(null);
+    const aboutMernRef = useRef<HTMLSpanElement>(null);
+    const arrowRef = useRef<HTMLSpanElement>(null);
+    const cursorRef = useRef<HTMLDivElement>(null);
+    const scrollBtnRef = useRef<HTMLDivElement>(null);
+    const cursorTextRef = useRef<HTMLSpanElement>(null);
+    const cursorEyeRef = useRef<HTMLImageElement>(null);
+    const lenisRef = useRef<Lenis | null>(null);
 
-    // Timelines
-    const videoTimeline = useRef();
-    const mernTimeline = useRef();
-    const rupeeTimeline = useRef();
-    const cursorTextTimeline = useRef();
+    // Timelines (NOW TYPED CORRECTLY)
+    const videoTimeline = useRef<gsap.core.Timeline | null>(null);
+    const mernTimeline = useRef<gsap.core.Timeline | null>(null);
+    const rupeeTimeline = useRef<gsap.core.Timeline | null>(null);
+    const cursorTextTimeline = useRef<gsap.core.Timeline | null>(null);
 
     // ✅ Refactored State: Single state for cursor mode
     const [cursorState, setCursorState] = useState('default'); // 'default', 'mern', 'video'
@@ -45,7 +45,7 @@ const HeroSection = () => {
         lenisRef.current = lenis;
 
         // ✅ Simplified RAF loop using GSAP's ticker for perfect sync
-        const update = (time) => {
+        const update = (time: number) => { // Added type for 'time'
             lenis.raf(time * 1000);
         }
 
@@ -62,7 +62,7 @@ const HeroSection = () => {
 
     // --- Custom Cursor Movement ---
     useEffect(() => {
-        const moveCursor = (e) => {
+        const moveCursor = (e: MouseEvent) => { // Added type for 'e'
             gsap.to(cursorRef.current, {
                 x: e.clientX,
                 y: e.clientY,
@@ -128,22 +128,22 @@ const HeroSection = () => {
 
     }, [cursorState]);
 
-    // --- Event Handlers ---
+    // --- Event Handlers (with optional chaining '?.') ---
     const handleVideoEnter = () => {
-        videoTimeline.current.play();
+        videoTimeline.current?.play(); // Added '?'
         setCursorState('video');
     };
 
     const handleVideoLeave = () => {
-        videoTimeline.current.reverse();
+        videoTimeline.current?.reverse(); // Added '?'
         setCursorState('default');
     };
 
     const handleMernLeave = () => {
-        mernTimeline.current.reverse();
+        mernTimeline.current?.reverse(); // Added '?'
         gsap.to([cursorTextRef.current, cursorEyeRef.current], {
             opacity: 0,
-            duration: 0.1 ,
+            duration: 0.1,
             ease: 'power2.out',
             overwrite: 'auto' // This is the key!
         });
@@ -151,7 +151,7 @@ const HeroSection = () => {
     };
 
     const handleMernEnter = () => {
-        mernTimeline.current.play();
+        mernTimeline.current?.play(); // Added '?'
         gsap.to([cursorTextRef.current, cursorEyeRef.current], {
             opacity: 1,
             delay: 0.3,
@@ -160,7 +160,7 @@ const HeroSection = () => {
             overwrite: 'auto' // This is the key!
         });
         setCursorState('mern');
-    }; 
+    };
 
     const handleRupeeEnter = () => {
         if (rupeeTimeline.current) {
@@ -203,9 +203,12 @@ const HeroSection = () => {
             .to(rupeeRef1.current, { x: 70, opacity: 1, duration: 0.35, ease: 'power2.inOut' }, "<")
             .to(rupeeRef2.current, { x: 70, opacity: 1, duration: 0.35, ease: 'power2.inOut' }, "<");
 
+        // ✅ FIX 1: Added guard clause
+        if (!textRef.current) return;
+
         // Text animation logic is now declarative, so we just select the spans
         const spans = gsap.utils.toArray(textRef.current.querySelectorAll('span'));
-        
+
         // ✅ Initialize the cursor text timeline here
         cursorTextTimeline.current = gsap.timeline({ paused: true })
             .to([cursorTextRef.current, cursorEyeRef.current], {
@@ -224,7 +227,7 @@ const HeroSection = () => {
                 scrub: 1.5,
             }
         });
-        
+
         tl.to(headerRef.current, { scale: 0.8, opacity: 0.5, duration: 1 })
             .to(headerRef.current, { y: -300, opacity: 0, duration: 2 })
             .to(headerRef.current, { y: -600, duration: 0 })
@@ -269,7 +272,8 @@ const HeroSection = () => {
                             <span className="frame1-v absolute -left-2 -bottom-2 w-0.5 h-0 bg-yellow-300"></span>
                         </span>
                         <span ref={arrowRef} className='absolute -top-32 left-86 opacity-0 w-[200px]'>
-                            <MyArrowSvg size={'150'} />
+                            {/* ✅ FIX 2: Changed string '150' to number {150} */}
+                            <MyArrowSvg size={150} />
                         </span>
                         <h1 className='header text-[130px] font-extrabold flex items-center'>
                             DEVEL
@@ -300,7 +304,9 @@ const HeroSection = () => {
                             <div className='relative'>
                                 <div className='absolute h-2 w-5 top-6 left-3 bg-amber-50 opacity-0' ref={rupeeRef1}></div>
                                 <div className='absolute h-2 w-5 top-10.5 left-2 bg-amber-50 opacity-0' ref={rupeeRef2}></div>
-                                <img src='/image/rupee_image.png' ref={rupeeTimeline} onMouseEnter={handleRupeeEnter}
+                                {/* ✅ FIX 3: Removed the incorrect 'ref={rupeeTimeline}' prop */}
+                                <img src='/image/rupee_image.png'
+                                    onMouseEnter={handleRupeeEnter}
                                     onMouseLeave={handleRupeeLeave} className='h-[150px] w-[120px] ml-3 mt-2' alt='Rupee icon' />
                             </div>
                         </h1>
