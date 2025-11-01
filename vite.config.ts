@@ -8,4 +8,5 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   // The 'theme' object does not go here.
   plugins: [react(), tailwindcss()],
+  base: '/Portfolio/',
 })
