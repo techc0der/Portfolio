@@ -4,9 +4,6 @@
   import { useGSAP } from '@gsap/react';
   import Navbar from './components/Navbar';
   import HeroSection from './components/HeroSection';
-
-import About from './components/About';
-import ProjectCard from './components/ProjectCard';
 import Projects from './components/Projects';
 
   function App() {

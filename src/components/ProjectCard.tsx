@@ -1,12 +1,11 @@
 import React from 'react';
-import { Github, ExternalLink } from 'lucide-react';
+import { Github } from 'lucide-react';
 
 interface ProjectProps {
   title: string;
   description: string;
   image: string;
   tags: string[];
-  liveLink: string;
   repoLink: string;
 }
 
@@ -15,7 +14,6 @@ const ProjectCard: React.FC<ProjectProps> = ({
   description, 
   image, 
   tags, 
-  liveLink, 
   repoLink 
 }) => {
   return (

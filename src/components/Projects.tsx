@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import  { useRef } from 'react';
 import ProjectCard from './ProjectCard';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -11,7 +11,6 @@ interface Project {
     description: string;
     image: string;
     tags: string[];
-    liveLink: string;
     repoLink: string;
 }
 
@@ -26,7 +25,7 @@ const Projects = () => {
             description: "A comprehensive furniture e-commerce platform. Features user auth, product filtering, a shopping cart with persistent state, and Stripe payment integration.",
             image: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=800&q=80",
             tags: ['MERN', 'Redux', 'Stripe', 'Tailwind'],
-            liveLink: "#",
+     
             repoLink: "https://github.com/techc0der/OnlineShoppingWebsite-Mern-Stack-",
         },
         {
@@ -34,7 +33,6 @@ const Projects = () => {
             description: "A collaborative Kanban-style project management tool. Supports drag-and-drop tasks, real-time updates via Socket.io, and team workspaces.",
             image: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?auto=format&fit=crop&w=800&q=80",
             tags: ['MERN', 'Socket.io', 'DnD Kit', 'Zustand'],
-            liveLink: "#",
             repoLink: "https://github.com/techc0der/Task-Manager-MERN-Stack",
         },
         {
@@ -42,8 +40,7 @@ const Projects = () => {
             description: "A highly interactive portfolio website showcasing projects and skills. Built with advanced animations and 3D elements to demonstrate frontend mastery.",
             image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
             tags: ['MERN', 'GSAP', 'Three.js', 'Framer'],
-            liveLink: "#",
-            repoLink: "https://github.com/techc0der/Portfolio",
+            repoLink: "#",
         }
     ];
 
