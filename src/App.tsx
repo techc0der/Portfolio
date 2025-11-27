@@ -4,7 +4,10 @@
   import { useGSAP } from '@gsap/react';
   import Navbar from './components/Navbar';
   import HeroSection from './components/HeroSection';
+
 import About from './components/About';
+import ProjectCard from './components/ProjectCard';
+import Projects from './components/Projects';
 
   function App() {
     const navRef = useRef(null);
@@ -27,7 +30,7 @@ import About from './components/About';
       <div className="App w-full relative">
         <Navbar ref={navRef} />
         <HeroSection />
-        <About/>
+        <Projects/>
       </div>
     );
   }

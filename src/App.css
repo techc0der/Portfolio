@@ -1,0 +1,42 @@
+@layer components {
+  .neon-link {
+    text-decoration: none;
+    position: relative;
+    transition: all 0.5s ease;
+  }
+
+  /* We use attr(data-text) so the pseudo-element copies the link text */
+  .neon-link::before {
+    content: attr(data-text); 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #00ff00;
+    visibility: hidden;
+    /* Legacy clip property from your snippet */
+    clip: rect(0, 0, 0, 0); 
+    transition: all 0.5s ease;
+  }
+
+  .neon-link:hover {
+    color: #00ff00;
+    animation: neonFlicker 1.5s infinite alternate;
+  }
+
+  .neon-link:hover::before {
+    visibility: visible;
+    clip: rect(0, 900px, 0, 0);
+    animation: neonFlicker 1.5s infinite alternate;
+  }
+}
+
+@keyframes neonFlicker {
+  0%, 100% {
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #ff00ff, 0 0 20px #ff00ff, 0 0 25px #ff00ff, 0 0 30px #ff00ff, 0 0 35px #ff00ff;
+  }
+  50% {
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #ff00ff, 0 0 20px #ff00ff, 0 0 25px #ff00ff, 0 0 30px #ff00ff, 0 0 35px #ff00ff, 0 0 40px #ff00ff, 0 0 50px #ff00ff, 0 0 75px #ff00ff;
+  }
+}
