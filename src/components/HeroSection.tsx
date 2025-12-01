@@ -219,7 +219,7 @@ const HeroSection = () => {
     }, { scope: heroRef });
 
     return (
-        <>
+        <section id='home'>
             <div
                 ref={cursorRef}
                 className="fixed flex justify-center items-center gap-1 px-2 top-0 left-0 w-7 h-7 bg-white rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-50"
@@ -309,7 +309,7 @@ const HeroSection = () => {
             </div><div id="next-section" className="h-60 w-full bg-black flex justify-center items-center">
             </div>
 
-        </>
+        </section>
     );
 }
 

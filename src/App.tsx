@@ -27,7 +27,7 @@ import Projects from './components/Projects';
       <div className="App w-full relative">
         <Navbar ref={navRef} />
         <HeroSection />
-        <Projects/>
+        <Projects  />
       </div>
     );
   }

@@ -1,65 +1,91 @@
 import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+// 1. Register GSAP Plugin
+gsap.registerPlugin(ScrollToPlugin);
 
 const Navlist: React.FC = () => {
     const containerRef = useRef<HTMLUListElement>(null);
     const navItems = ["HOME", "RESUME", "PROJECTS", "CONTACT"];
 
-    // 1. Setup GSAP Context
     const { contextSafe } = useGSAP({ scope: containerRef });
 
-    // 2. Define the Hover Enter (Start Flicker)
+    // --- HOVER ANIMATIONS ---
     const handleMouseEnter = contextSafe((e: React.MouseEvent<HTMLAnchorElement>) => {
         const target = e.currentTarget;
-
-        // Animate Color
         gsap.to(target, {
             textShadow: "0 0 20px #00ff00, 0 0 40px #00ff00",
             color: '#00ff00',
             duration: 0.3,
             ease: "power2.out"
         });
-
-        
-
-        // Optional: If you kept the ::before layer, you would target it here too.
-        // For simplicity, we are applying the effect directly to the text.
     });
 
-    // 3. Define the Leave Event (Smooth Remove)
     const handleMouseLeave = contextSafe((e: React.MouseEvent<HTMLAnchorElement>) => {
         const target = e.currentTarget;
-
-        // overwrite: true is CRITICAL. It stops the infinite flicker immediately
-        // and starts this new animation from the current value.
         gsap.to(target, {
-            color: "#ffffff", // Back to white (or your default color)
-            textShadow: "0 0 0px transparent", // Smoothly collapse shadow
+            color: "#ffffff",
+            textShadow: "0 0 0px transparent",
             duration: 0.5,
             ease: "power2.out",
             overwrite: true
         });
     });
 
+    // --- SCROLL LOGIC ---
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+        e.preventDefault(); // Stop instant jump
+        gsap.to(window, {
+            duration: 1,
+            scrollTo: { y: targetId, offsetY: 80 }, // offsetY handles sticky navs
+            ease: "power3.inOut"
+        });
+    };
+
     return (
         <ul
             ref={containerRef}
-            className="flex  gap-8 list-none  bg-black items-start"
+            className="flex gap-8 list-none bg-black items-start"
         >
-            {navItems.map((item) => (
-                <li key={item}>
-                    <a
-                        href={`#${item.toLowerCase()}`}
-                        // Remove CSS hover classes, let GSAP handle it
-                        className="block text-white text-md font-bold uppercase tracking-wider cursor-pointer select-none"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        {item}
-                    </a>
-                </li>
-            ))}
+            {navItems.map((item) => {
+                const isResume = item === "RESUME";
+                const targetId = `#${item.toLowerCase()}`;
+                
+                // Ensure 'resume.pdf' is in your /public folder
+                const resumeLink = "/Sandip_Suthar_CV.pdf"; 
+
+                return (
+                    <li key={item}>
+                        <a
+                            href={isResume ? resumeLink : targetId}
+                            
+                            // --- RESUME SPECIFIC LOGIC ---
+                            // Opens in new tab
+                            target={isResume ? "_blank" : "_self"} 
+                            // Security best practice for _blank
+                            rel={isResume ? "noopener noreferrer" : undefined} 
+                            // Forces download with this specific filename
+                            download={isResume ? "Sandip_Suthar_CV.pdf" : undefined} 
+                            // -----------------------------
+
+                            className="block text-white text-md font-bold uppercase tracking-wider cursor-pointer select-none"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            
+                            // Only run smooth scroll if it is NOT the resume
+                            onClick={(e) => {
+                                if (!isResume) {
+                                    handleScroll(e, targetId);
+                                }
+                            }}
+                        >
+                            {item}
+                        </a>
+                    </li>
+                );
+            })}
         </ul>
     );
 };
